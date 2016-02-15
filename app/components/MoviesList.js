@@ -4,36 +4,67 @@ var {
     View,
     Text,
     ListView,
+    StyleSheet,
+    ActivityIndicatorIOS,
     } = React;
 
 var MoviesList = React.createClass({
-    getInitialState: function() {
-
+    getInitialState: function () {
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
-
+            dataSource: ds.cloneWithRows(this.props.data),
         };
     },
-    renderRow(rowData) {
+
+
+    renderRow: function (rowData) {
         var {
             title
             } = rowData;
-
-        return(
+        return (
             <View>
+
                 <Text>{title}</Text>
             </View>
         );
     },
 
-    render: function() {
-        console.log("props data",this.props.data)
+
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(nextProps.data)
+        });
+    },
+
+
+
+
+    render: function () {
         return (
-            <ListView
-                dataSource={this.props.dataSource}
-                renderRow={(rowData) => this.renderRow(rowData)}
-            />
+            <View>
+                <ActivityIndicatorIOS
+                    animating={this.props.loading}
+                    size="large"
+                    color="#00aa00"
+                />
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) => this.renderRow(rowData)}
+                />
+            </View>
         );
     },
+});
+
+
+var styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    loading: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 module.exports = MoviesList;

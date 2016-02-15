@@ -3,24 +3,21 @@ var React = require('react-native');
 var {
     View,
     ScrollView,
-    ListView
+
     } = React;
 
 
 var MoviesList = require('./components/MoviesList');
+
 var Movies = React.createClass({
-
-
     getInitialState() {
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
 
         fetch('http://api.themoviedb.org/3/movie/popular?api_key=4aa883f95999ec813b8bfaf319f3972b')
             .then(response => response.json())
             .then(json => {
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(json.results),
-                    loaded: true,
+                    loading: false,
+                    data: json.results
                 });
             })
             .catch((error) => {
@@ -28,19 +25,20 @@ var Movies = React.createClass({
             });
 
         return {
-            dataSource: ds
+            data: [],
+            loading: true
         }
     },
 
     render() {
         return (
-        <View>
-            <ScrollView>
-                <View>
-                    <MoviesList dataSource={this.state.dataSource} />
-                </View>
-            </ScrollView>
-        </View>
+            <View>
+                <ScrollView>
+                    <View>
+                        <MoviesList data={this.state.data} loading={this.state.loading}/>
+                    </View>
+                </ScrollView>
+            </View>
 
         );
     }
