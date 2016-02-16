@@ -3,11 +3,15 @@ var React = require('react-native');
 var {
     View,
     ScrollView,
-
+    NavigationBar
     } = React;
 
 
 var MoviesList = require('./components/MoviesList');
+var NavigationBar = require('react-native-navbar');
+
+
+
 
 var Movies = React.createClass({
     getInitialState() {
@@ -33,6 +37,8 @@ var Movies = React.createClass({
     render() {
         return (
             <View>
+                <NavigationBar
+                    title={{ title: 'Title', }} />
                 <ScrollView>
                     <View>
                         <MoviesList data={this.state.data} loading={this.state.loading}/>

@@ -7,14 +7,37 @@
 
 
 var React = require('react-native');
+var NavigationBar = require('react-native-navbar');
 var {
     AppRegistry,
     StyleSheet,
     Text,
     View,
+    Navigator,
     } = React;
 
 var Movies = require("./app/Movies");
 
-AppRegistry.registerComponent('codecampRNMoviesApp', () => Movies);
+
+function renderScene(route, navigator) {
+    return <route.component route={route} navigator={navigator} />;
+}
+
+var Routing = React.createClass({
+    render() {
+        const initialRoute = {
+            component: Movies
+        };
+
+        return (
+            <View style={{ flex: 1, }}>
+                <Navigator
+                    initialRoute={initialRoute}
+                    renderScene={renderScene}/>
+            </View>
+        );
+    }
+})
+
+AppRegistry.registerComponent('codecampRNMoviesApp', () => Routing);
 
