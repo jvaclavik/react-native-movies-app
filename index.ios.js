@@ -8,12 +8,17 @@
 
 var React = require('react-native');
 var NavigationBar = require('react-native-navbar');
+var Overlay = require('react-native-overlay');
+var BlurView = require('react-native-blur').BlurView;
+
+
 var {
     AppRegistry,
     StyleSheet,
     Text,
     View,
     Navigator,
+
     } = React;
 
 var Movies = require("./app/Movies");
@@ -38,6 +43,6 @@ var Routing = React.createClass({
         );
     }
 })
-
 AppRegistry.registerComponent('codecampRNMoviesApp', () => Routing);
+
 

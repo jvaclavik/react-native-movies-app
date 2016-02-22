@@ -1,21 +1,19 @@
 var React = require('react-native');
+var NavigationBar = require('react-native-navbar');
+var MoviesList = require('./components/MoviesList');
+var LoadingOverlay = require('./components/LoadingOverlay');
+
 
 var {
     View,
     ScrollView,
-    NavigationBar
+    StyleSheet,
+
     } = React;
 
 
-var MoviesList = require('./components/MoviesList');
-var NavigationBar = require('react-native-navbar');
-
-
-
-
 var Movies = React.createClass({
-    getInitialState() {
-
+    getInitialState: function () {
         fetch('http://api.themoviedb.org/3/movie/popular?api_key=4aa883f95999ec813b8bfaf319f3972b')
             .then(response => response.json())
             .then(json => {
@@ -23,30 +21,46 @@ var Movies = React.createClass({
                     loading: false,
                     data: json.results
                 });
+                console.log(json.results);
             })
             .catch((error) => {
                 console.warn(error);
             });
-
         return {
             data: [],
             loading: true
         }
     },
 
-    render() {
+
+    render: function () {
         return (
-            <View>
-                <NavigationBar
-                    title={{ title: 'Title', }} />
+
+            <View style={styles.container}>
+                <LoadingOverlay isVisible={this.state.loading}/>
+                <NavigationBar style={styles.navbar} tintColor="#08b1ff"
+                               title={{ title: 'Movie list', tintColor: "#ffffff" }}/>
                 <ScrollView>
                     <View>
-                        <MoviesList data={this.state.data} loading={this.state.loading}/>
+                        <MoviesList data={this.state.data} loading={this.state.loading}
+                                    navigator={this.props.navigator}/>
                     </View>
                 </ScrollView>
             </View>
-
         );
+    }
+});
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    navbar: {
+        backgroundColor: "#08b1ff",
+    },
+    title: {
+        color: "#fff"
     }
 });
 
