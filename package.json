@@ -8,6 +8,7 @@
   "dependencies": {
     "react-native": "^0.20.0",
     "react-native-blur": "^0.7.10",
+    "react-native-button": "^1.4.2",
     "react-native-overlay": "^0.4.1"
   }
 }

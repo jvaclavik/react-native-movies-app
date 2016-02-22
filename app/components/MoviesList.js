@@ -28,7 +28,6 @@ var MoviesList = React.createClass({
             poster_path,
             vote_average
             } = rowData;
-        console.log("http://image.tmdb.org/t/p/w500" + poster_path)
         var movie = rowData;
         return (
 
@@ -49,7 +48,6 @@ var MoviesList = React.createClass({
     },
 
     showMovieDetail: function (movie) {
-        console.log(this.props)
         this.props.navigator.push({
             title: movie.title,
             component: MovieDetail,
